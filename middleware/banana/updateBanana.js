@@ -14,3 +14,4 @@ const updateBanana = (req, res, next) => {
     }
     return res.status(200).json(bananas[res.locals.bananaIndex]);
 }
+module.exports = updateBanana;

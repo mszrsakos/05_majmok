@@ -16,3 +16,4 @@ const updateMonkey = (req, res, next) => {
     }
     return res.status(200).json(monkeys[res.locals.monkeyIndex]);
 }
+module.exports = updateMonkey;

@@ -3,3 +3,4 @@ const deleteMonkeyBananas = (req, res, next) => {
     bananas = bananas.filter(b => b.monkeyId !== monkeyID);
     next();
 };
+module.exports = deleteMonkeyBananas;

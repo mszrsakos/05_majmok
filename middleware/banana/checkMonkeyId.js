@@ -15,3 +15,4 @@ const checkMonkeyId = (req, res, next) => {
     }
     next();
 }
+module.exports = checkMonkeyId;

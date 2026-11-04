@@ -3,3 +3,4 @@ const deleteBanana = (req, res, next) => {
     bananas.splice(res.locals.bananaIndex, 1);
     return res.status(200).json({ deletedBananaById })
 }
+module.exports = deleteBanana;

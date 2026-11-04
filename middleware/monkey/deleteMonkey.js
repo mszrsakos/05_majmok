@@ -3,3 +3,4 @@ const deleteMonkey = (req, res, next) => {
     monkeys.splice(res.locals.monkeyIndex, 1);
     return res.status(200).json({ deletedMonkeyById });
 }
+module.exports = deleteMonkey;

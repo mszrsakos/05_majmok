@@ -13,3 +13,4 @@ const createBanana = (req, res, next) => {
     globalBananaId++;
     return res.status(201).json(newBanana);
 };
+module.exports = createBanana;

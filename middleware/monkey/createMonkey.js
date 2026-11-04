@@ -13,3 +13,4 @@ const createMonkey = (req, res, next) => {
     return res.status(200).json(newMonkey)
 
 }
+module.exports = createMonkey;
