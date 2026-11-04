@@ -1,20 +1,20 @@
-const getMonkeysMW=require('../middleware/getMonkeys');
-const getMonkeyMW=require('../middleware/getMonkey');
-const createMonkeyMW=require('../middleware/createMonkey');
-const updateMonkeyMW=require('../middleware/updateMonkey');
-const deleteMonkeyMW=require('../middleware/deleteMonkey');
-const deleteMonkeyBananasMW=require('../middleware/deleteMonkeyBananas');
+const getMonkeysMW=require('../middleware/monkey/getMonkeys');
+const getMonkeyMW=require('../middleware/monkey/getMonkey');
+const createMonkeyMW=require('../middleware/monkey/createMonkey');
+const updateMonkeyMW=require('../middleware/monkey/updateMonkey');
+const deleteMonkeyMW=require('../middleware/monkey/deleteMonkey');
 
-const getBananasMW=require('../middleware/getBananas');
-const getBananaMW=require('../middleware/getBanana');
-const createBananaMW=require('../middleware/createBanana');
-const updateBananaMW=require('../middleware/updateBanana');
-const deleteBananaMW=require('../middleware/deleteBanana');
-const checkMonkeyIdMW=require('../middleware/checkMonkeyId');
 
-const renderMW=require('../middleware/render');
-// const getMonkeyIndexMW=require('../middleware/getMonkeyIndex');
-// const getBananaIndexMW=require('../middleware/getBananaIndex');
+
+const getBananasMW=require('../middleware/banana/getBananas');
+const getBananaMW=require('../middleware/banana/getBanana');
+const createBananaMW=require('../middleware/banana/createBanana');
+const updateBananaMW=require('../middleware/banana/updateBanana');
+const deleteBananaMW=require('../middleware/banana/deleteBanana');
+const checkMonkeyIdMW=require('../middleware/banana/checkMonkeyId');
+const deleteMonkeyBananasMW=require('../middleware/banana/deleteMonkeyBananas');
+
+
 
 
 function addRoutes(app) {
@@ -77,16 +77,16 @@ const objRep = {
 }
 
 
-app.get('/', getMonkeysMW(objRep), renderMW(objRep, 'index'));
-app.post('/monkey', createMonkey);
-app.get('/monkey/:id', getMonkeyIndex, getMonkey);
-app.delete('/monkey/:id', getMonkeyIndex, deleteMonkeyBananas, deleteMonkey);
-app.patch('/monkey/:id', getMonkeyIndex, updateMonkey);
+app.get('/api/monkey', getMonkeysMW(objRep));
+app.post('/api/monkey', createMonkeyMW(objRep));
+app.get('/api/monkey/:id', getMonkeyIndexMW(objRep), getMonkeyMW(objRep));
+app.delete('/api/monkey/:id', getMonkeyIndexMW(objRep), deleteMonkeyBananasMW(objRep), deleteMonkeyMW(objRep));
+app.patch('/api/monkey/:id', getMonkeyIndexMW(objRep), updateMonkeyMW(objRep));
 
-app.get('/banana', getBananas); // Minden banán
-app.post('/banana', checkMonkeyId, createBanana);
-app.get('/banana/:id', getBananaIndex, getBanana);
-app.delete('/banana/:id', getBananaIndex, deleteBanana);
-app.patch('/banana/:id', getBananaIndex, checkMonkeyId, updateBanana);
+app.get('/api/banana', getBananasMW(objRep)); // Minden banán
+app.post('/api/banana', checkMonkeyIdMW(objRep), createBananaMW(objRep));
+app.get('/api/banana/:id', getBananaIndexMW(objRep), getBananaMW(objRep));
+app.delete('/api/banana/:id', getBananaIndexMW(objRep), deleteBananaMW(objRep));
+app.patch('/api/banana/:id', getBananaIndexMW(objRep), checkMonkeyIdMW(objRep), updateBananaMW(objRep));
 }
 module.exports=addRoutes;
