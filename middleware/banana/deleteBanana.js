@@ -1,0 +1,5 @@
+const deleteBanana = (req, res, next) => {
+    const deletedBananaById = bananas[res.locals.bananaIndex];
+    bananas.splice(res.locals.bananaIndex, 1);
+    return res.status(200).json({ deletedBananaById })
+}
