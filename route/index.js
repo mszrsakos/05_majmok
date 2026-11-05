@@ -12,21 +12,27 @@ const updateBananaMW=require('../middleware/banana/updateBanana');
 const deleteBananaMW=require('../middleware/banana/deleteBanana');
 const checkMonkeyIdMW=require('../middleware/banana/checkMonkeyId');
 const deleteMonkeyBananasMW=require('../middleware/banana/deleteMonkeyBananas');
+const renderMW = require('../middleware/render'); 
 
 function addRoutes(app, db, monkeyModel, bananaModel) {
     const objRep = { db, uuid, monkeyModel, bananaModel };
 
 
-app.get('/monkey', getMonkeysMW(objRep));
-app.post('/monkey', createMonkeyMW(objRep));
-app.get('/monkey/:id', getMonkeyMW(objRep), (req, res) => res.json(res.locals.monkey));
-app.delete('/monkey/:id', getMonkeyMW(objRep), deleteMonkeyBananasMW(objRep), deleteMonkeyMW(objRep));
-app.patch('/monkey/:id', getMonkeyMW(objRep), updateMonkeyMW(objRep));
+app.get('/api/monkey', getMonkeysMW(objRep));
+app.post('/api/monkey', createMonkeyMW(objRep));
+app.get('/api/monkey/:id', getMonkeyMW(objRep), (req, res) => res.json(res.locals.monkey));
+app.delete('/api/monkey/:id', getMonkeyMW(objRep), deleteMonkeyBananasMW(objRep), deleteMonkeyMW(objRep));
+app.patch('/api/monkey/:id', getMonkeyMW(objRep), updateMonkeyMW(objRep));
 
-app.get('/banana', getBananasMW(objRep));
-app.post('/banana', checkMonkeyIdMW(objRep), createBananaMW(objRep));
-app.get('/banana/:id', getBananaMW(objRep), (req, res) => res.json(res.locals.banana));
-app.delete('/banana/:id', getBananaMW(objRep), deleteBananaMW(objRep));
-app.patch('/banana/:id', getBananaMW(objRep), checkMonkeyIdMW(objRep), updateBananaMW(objRep));
+app.get('/api/banana', getBananasMW(objRep));
+app.post('/api/banana', checkMonkeyIdMW(objRep), createBananaMW(objRep));
+app.get('/api/banana/:id', getBananaMW(objRep), (req, res) => res.json(res.locals.banana));
+app.delete('/api/banana/:id', getBananaMW(objRep), deleteBananaMW(objRep));
+app.patch('/api/banana/:id', getBananaMW(objRep), checkMonkeyIdMW(objRep), updateBananaMW(objRep));
+
+app.get('/', 
+        getMonkeysMW(objRep), 
+        renderMW(objRep, 'index'));
 }
+
 module.exports=addRoutes;

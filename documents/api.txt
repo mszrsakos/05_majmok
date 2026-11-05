@@ -35,3 +35,5 @@ DELETE /banana/:id – banán törlése azonosító alapján (DELETE).
  
 Egyéb
 Bármilyen más útvonal vagy metódus – 404-es JSON hiba.
+
+majmok listája, majom-űrlap, majom szerkesztés, banán-űrlap, banánok listája, törlések
