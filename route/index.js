@@ -72,13 +72,13 @@ const objRep = {
 
 app.get('/monkey', getMonkeysMW(objRep));
 app.post('/monkey', createMonkeyMW(objRep));
-app.get('/monkey/:id', getMonkeyMW(objRep));
+app.get('/monkey/:id', getMonkeyMW(objRep), (req, res, next) => res.json(res.locals.monkeys));
 app.delete('/monkey/:id', getMonkeyMW(objRep), deleteMonkeyMW(objRep));
 app.patch('/monkey/:id', getMonkeyMW(objRep), updateMonkeyMW(objRep));
 
-app.get('/banana', getBananasMW(objRep)); // Minden banán
-// app.post('/banana', checkMonkeyIdMW(objRep), createBananaMW(objRep));
-app.get('/banana/:id', getBananaMW(objRep));
+app.get('/banana', getBananasMW(objRep));
+app.post('/banana', checkMonkeyIdMW(objRep), createBananaMW(objRep));
+app.get('/banana/:id', getBananaMW(objRep), (req, res, next) => res.json(res.locals.bananas));
 app.delete('/banana/:id', getBananaMW(objRep), deleteBananaMW(objRep));
 app.patch('/banana/:id', getBananaMW(objRep), checkMonkeyIdMW(objRep), updateBananaMW(objRep));
 }
