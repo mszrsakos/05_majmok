@@ -1,6 +1,5 @@
-const deleteMonkeyBananas = (req, res, next) => {
-    const monkeyID = monkeys[res.locals.monkeyIndex].id;
-    bananas = bananas.filter(b => b.monkeyId !== monkeyID);
-    next();
+module.exports = (objRep) => (req, res, next) => {
+    const { bananaModel } = objRep;
+    bananaModel.removeWhere({ monkeyId: res.locals.monkey.id });
+    return next();
 };
-module.exports = deleteMonkeyBananas;

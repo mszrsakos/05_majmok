@@ -5,11 +5,14 @@
 // }
 // module.exports = deleteBanana;
 
-module.exports = (objRep) => { 
-    const { bananas } = objRep; 
-    return (req, res, next) => { 
-        const deletedBanana = bananas[res.locals.bananaId]; 
-        bananas.splice(res.locals.bananaId, 1); 
-        return res.status(200).json({ deletedBanana }); 
-    }; 
-}; 
+module.exports = (objRep) => {
+    const { bananaModel, db } = objRep;
+    return (req, res, next) => {
+        const deletedBanana = res.locals.banana;
+        bananaModel.remove(deletedBanana);
+        return db.saveDatabase(err => {
+            if (err) return next(err);
+            return res.status(200).json({ deletedBanana });
+        });
+    };
+};

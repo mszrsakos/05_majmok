@@ -1,38 +1,20 @@
-// const updateMonkey = (req, res, next) => {
-//     if (typeof req.body.name !== 'undefined') {
-//         monkeys[res.locals.monkeyIndex].name = req.body.name;
-//     }
-//     if (typeof req.body.sex !== 'undefined') {
-//         monkeys[res.locals.monkeyIndex].sex = req.body.sex;
-//     }
-//     if (typeof req.body.species !== 'undefined') {
-//         monkeys[res.locals.monkeyIndex].species = req.body.species;
-//     }
-//     if (typeof req.body.bananaId !== 'undefined') {
-//         monkeys[res.locals.monkeyIndex].bananaId = req.body.bananaId;
-//     }
-//     if ((typeof req.body.name === 'undefined') && (typeof req.body.sex === 'undefined') && (typeof req.body.species === 'undefined')) {
-//         return res.status(400).json({ error: 'Missing name, sex or species' })
-//     }
-//     return res.status(200).json(monkeys[res.locals.monkeyIndex]);
-// }
-// module.exports = updateMonkey;
+module.exports = (objRep) => {
+    const { monkeyModel, db } = objRep;
+    return (req, res, next) => {
+        const body = req.body ?? {};
+        if (body.name === undefined && body.sex === undefined && body.species === undefined) {
+            return res.status(400).json({ error: 'Missing name, sex or species' });
+        }
 
-module.exports = (objRep) => { 
-    const { monkeys } = objRep; 
-    return (req, res, next) => { 
-        if (typeof req.body.name !== 'undefined') { 
-            monkeys[res.locals.monkeyId].name = req.body.name; 
-        } 
-        if (typeof req.body.sex !== 'undefined') { 
-            monkeys[res.locals.monkeyId].sex = req.body.sex; 
-        } 
-        if (typeof req.body.species !== 'undefined') { 
-            monkeys[res.locals.monkeyId].species = req.body.species; 
-        } 
-        if ((typeof req.body.name === 'undefined') && (typeof req.body.sex === 'undefined') && (typeof req.body.species === 'undefined')) { 
-            return res.status(400).json({ error: 'Missing name, sex or species' }); 
-        } 
-        return res.status(200).json(monkeys[res.locals.monkeyId]); 
-    }; 
-}; 
+        const monkey = res.locals.monkey;
+        if (body.name !== undefined) monkey.name = body.name;
+        if (body.sex !== undefined) monkey.sex = body.sex;
+        if (body.species !== undefined) monkey.species = body.species;
+
+        monkeyModel.update(monkey);
+        return db.saveDatabase(err => {
+            if (err) return next(err);
+            return res.status(200).json(monkey);
+        });
+    };
+};
