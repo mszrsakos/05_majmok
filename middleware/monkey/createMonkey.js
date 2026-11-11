@@ -1,21 +1,22 @@
-module.exports = (objRep, { respondWithJson = true } = {}) => {
+module.exports = (objRep) => {
     const { monkeyModel, db, uuid } = objRep;
     return (req, res, next) => {
-        const body = req.body ?? {};
-        if (body.name === undefined || body.sex === undefined || body.species === undefined) {
+        if (typeof req.body.name === 'undefined' ||
+            typeof req.body.sex === 'undefined' ||
+            typeof req.body.species === 'undefined') {
             return res.status(400).json({ error: 'Missing name, sex or species' });
         }
-
-        const monkey = monkeyModel.insert({
+        const newMonkey = {
             id: uuid.v4(),
-            name: body.name,
-            sex: body.sex,
-            species: body.species
-        });
-
-        return db.saveDatabase(err => {
-            if (err) return next(err);
-            if (respondWithJson) return res.status(201).json(monkey);
+            name: req.body.name,
+            sex: req.body.sex,
+            species: req.body.species
+        };
+        res.locals.monkey = monkeyModel.insert(newMonkey);
+        db.saveDatabase(err => {
+            if (err) {
+                return next(err);
+            }
             return next();
         });
     };

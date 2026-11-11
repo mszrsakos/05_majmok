@@ -62,16 +62,16 @@ function addRoutes(app, db, monkeyModel, bananaModel) {
     app.get('/',
         (req, res, next) => res.redirect('/monkeys'));
     app.get('/monkeys',
-        getMonkeysMW(objRep, { respondWithJson: false }),
+        getMonkeysMW(objRep),
         getBananasMW(objRep, { respondWithJson: false }),
         renderMW(objRep, 'monkeys'));
     app.get('/newmonkey',
         renderMW(objRep, 'monkeyform'));
     app.post('/newmonkey',
-        createMonkeyMW(objRep, { respondWithJson: false }),
+        createMonkeyMW(objRep),
         (req, res, next) => res.redirect('/monkeys'));
     app.get('/editmonkey/:id',
-        getMonkeyMW(objRep),
+        getMonkeyMW(objRep, { respondWithJson: false }),
         renderMW(objRep, 'monkeyform'));
     app.post('/editmonkey/:id',
         getMonkeyMW(objRep, { respondWithJson: false }),

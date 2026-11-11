@@ -1,8 +1,8 @@
-module.exports = (objRep, { respondWithJson = true } = {}) => {
+module.exports = (objRep) => {
     const { monkeyModel } = objRep;
     return (req, res, next) => {
         const monkeys = monkeyModel.find();
-        if (respondWithJson) return res.status(200).json(monkeys);
+        console.table(monkeys);
         res.locals.monkeys = monkeys;
         return next();
     };
