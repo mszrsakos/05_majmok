@@ -1,4 +1,4 @@
-module.exports = (objRep) => {
+module.exports = (objRep, { respondWithJson = true } = {}) => {
     const { monkeyModel, db, uuid } = objRep;
     return (req, res, next) => {
         const body = req.body ?? {};
@@ -15,7 +15,8 @@ module.exports = (objRep) => {
 
         return db.saveDatabase(err => {
             if (err) return next(err);
-            return res.status(201).json(monkey);
+            if (respondWithJson) return res.status(201).json(monkey);
+            return next();
         });
     };
 };
