@@ -16,7 +16,7 @@
 // }
 // module.exports = updateBanana;
 
-module.exports = (objRep) => {
+module.exports = (objRep, { respondWithJson = true } = {}) => {
     const { bananaModel, db } = objRep;
     return (req, res, next) => {
         const body = req.body ?? {};
@@ -34,7 +34,8 @@ module.exports = (objRep) => {
         bananaModel.update(banana);
         return db.saveDatabase(err => {
             if (err) return next(err);
-            return res.status(200).json(banana);
+            if (respondWithJson) return res.status(200).json(banana);
+            return next();
         });
     };
 };

@@ -34,7 +34,7 @@
 //     }; 
 // }; 
 
-module.exports = (objRep) => { 
+module.exports = (objRep, { respondWithJson = true } = {}) => { 
     const { bananaModel, db, uuid } = objRep; 
     return (req, res, next) => { 
         const body = req.body ?? {};
@@ -52,7 +52,8 @@ module.exports = (objRep) => {
             if (err) { 
                 return next(err); 
             } 
-            return res.status(201).json(res.locals.banana); 
+            if (respondWithJson) return res.status(201).json(res.locals.banana); 
+            return next(); 
         }); 
     }; 
 };

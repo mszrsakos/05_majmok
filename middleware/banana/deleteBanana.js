@@ -5,14 +5,15 @@
 // }
 // module.exports = deleteBanana;
 
-module.exports = (objRep) => {
+module.exports = (objRep, { respondWithJson = true } = {}) => {
     const { bananaModel, db } = objRep;
     return (req, res, next) => {
         const deletedBanana = res.locals.banana;
         bananaModel.remove(deletedBanana);
         return db.saveDatabase(err => {
             if (err) return next(err);
-            return res.status(200).json({ deletedBanana });
+            if (respondWithJson) return res.status(200).json({ deletedBanana });
+            return next();
         });
     };
 };

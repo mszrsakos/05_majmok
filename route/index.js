@@ -68,46 +68,46 @@ function addRoutes(app, db, monkeyModel, bananaModel) {
     app.get('/newmonkey',
         renderMW(objRep, 'monkeyform'));
     app.post('/newmonkey',
-        createMonkeyMW(objRep),
+        createMonkeyMW(objRep, { respondWithJson: false }),
         (req, res, next) => res.redirect('/monkeys'));
     app.get('/editmonkey/:id',
         getMonkeyMW(objRep),
         renderMW(objRep, 'monkeyform'));
     app.post('/editmonkey/:id',
-        getMonkeyMW(objRep),
+        getMonkeyMW(objRep, { respondWithJson: false }),
         updateMonkeyMW(objRep),
         (req, res, next) => res.redirect('/monkeys'));
-    app.get('/deletemonkey/:id',
+    app.post('/deletemonkey/:id',
         getMonkeyMW(objRep),
         deleteMonkeyBananasMW(objRep),
-        deleteMonkeyMW(objRep),
+        deleteMonkeyMW(objRep, { respondWithJson: false }),
         (req, res, next) => res.redirect('/monkeys'));
     // Weboldal – banánok
     app.get('/bananas',
-        getBananasMW(objRep),
-        getMonkeysMW(objRep),
+        getBananasMW(objRep, { respondWithJson: false }),
+        getMonkeysMW(objRep, { respondWithJson: false }),
         renderMW(objRep, 'bananas'));
     app.get('/newbanana',
-        getMonkeysMW(objRep),
+        getMonkeysMW(objRep, { respondWithJson: false }),
         renderMW(objRep, 'bananaform'));
     app.post('/newbanana',
         parseBananaFormMW(objRep),
         checkMonkeyIdMW(objRep),
-        createBananaMW(objRep),
+        createBananaMW(objRep, { respondWithJson: false }),
         (req, res, next) => res.redirect('/bananas'));
     app.get('/editbanana/:id',
         getBananaMW(objRep),
-        getMonkeysMW(objRep),
+        getMonkeysMW(objRep, { respondWithJson: false }),
         renderMW(objRep, 'bananaform'));
     app.post('/editbanana/:id',
         getBananaMW(objRep),
         parseBananaFormMW(objRep),
         checkMonkeyIdMW(objRep),
-        updateBananaMW(objRep),
+        updateBananaMW(objRep, { respondWithJson: false }),
         (req, res, next) => res.redirect('/bananas'));
     app.get('/deletebanana/:id',
         getBananaMW(objRep),
-        deleteBananaMW(objRep),
+        deleteBananaMW(objRep, { respondWithJson: false }),
         (req, res, next) => res.redirect('/bananas'));
 }
 module.exports = addRoutes;

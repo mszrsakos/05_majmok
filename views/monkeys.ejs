@@ -27,7 +27,10 @@
                     </td>
                     <td>
                         <a href="/editmonkey/<%= m.id %>" class="btn btn-primary btn-sm m-1">Edit</a>
-                        <a href="/deletemonkey/<%= m.id %>" class="btn btn-danger btn-sm m-1">Delete</a>
+                        <form method="POST" action="/deletemonkey/<%= m.id %>" class="d-inline">
+                            
+                            <button type="submit" class="btn btn-danger btn-sm m-1">Delete</button>
+                        </form>
                     </td>
                 </tr>
                 <% }) %>
